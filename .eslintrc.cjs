@@ -19,6 +19,7 @@ module.exports = {
   ],
   plugins: ['@typescript-eslint', 'prettier'],
   settings: {},
+  ignorePatterns: ['node_modules', 'dist', 'coverage', 'public', '.next'],
   overrides: [],
   rules: {
     'unicorn/no-array-reduce': ['off'],

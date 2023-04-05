@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next --port 3003",
     "build": "next build",
-    "start": "next start --port 3003",
+    "start": "next start",
     "lint": "eslint --fix . --ext='js,cjs,mjs,jsx,ts,tsx' --ignore-path='.gitignore' --cache",
     "format": "prettier --write . --ignore-path='.gitignore'",
     "typecheck": "tsc --noEmit",
@@ -32,7 +32,6 @@
   "devDependencies": {
     "@next/bundle-analyzer": "^13.2.4",
     "@tailwindcss/forms": "^0.5.3",
-    "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.9",
     "@testing-library/react": "^14.0.0",
     "@types/eslint": "^8.37.0",

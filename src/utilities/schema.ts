@@ -10,14 +10,7 @@ export const messageSchema = z.object({
 })
 
 export type Message = z.infer<typeof messageSchema>
-/**
- * {
-  "result": {
-    "role": "assistant",
-    "content": "Hello! How can I assist you today?"
-  }
-}
- */
+
 export const botResponseSchema = z.object({
   result: z.object({
     role: z.literal('assistant'),

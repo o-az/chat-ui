@@ -1,4 +1,4 @@
-name: 'Test & Build & Deploy'
+name: 'Lint/Test/Build'
 
 on:
   push:
@@ -17,30 +17,33 @@ env:
   ACTIONS_RUNNER_DEBUG: true
 
 jobs:
-  build:
+  lint-test-build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: 'Checkout'
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
+      - name: 'Setup Bun'
+        uses: oven-sh/setup-bun
         with:
-          node-version: 14
+          bun-version: 'latest'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: 'Install Dependencies'
+        run: |
+          bun install
 
-      - name: Build
-        run: npm run build
+      - name: 'Lint & Format'
+        run: |
+          bun lint
+          bun format
 
-      - name: Test
-        run: npm run test
+      - name: 'Typecheck'
+        run: bun typecheck
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+      - name: 'Test'
+        run: bun test
+
+      - name: 'Build'
+        run: bun build
