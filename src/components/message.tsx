@@ -5,7 +5,7 @@ export function MessageUI(properties: Message) {
   return (
     <div
       className={clsx(
-        'm-2 max-w-fit justify-end break-words rounded-3xl py-3 px-2 text-left align-middle text-white',
+        'm-2 max-w-fit justify-end break-words rounded-3xl px-2 py-3 text-left align-middle text-white',
         properties.from === 'user'
           ? 'place-self-end justify-self-end rounded-br-none bg-blue-500'
           : 'place-self-start justify-self-start rounded-bl-none bg-gray-600'

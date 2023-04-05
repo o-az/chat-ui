@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { type ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai'
+import { Configuration, OpenAIApi } from 'openai'
 import { userMessageSchema } from '~/utilities'
 
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-3.5-turbo'
@@ -19,13 +19,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
 
   const completion = await openAIClient.createChatCompletion({
     model: OPENAI_MODEL,
-    messages: [
-      // {
-      //   role: 'system',
-      //   content: 'Hello! How are you?',
-      // },
-      { role: 'user', content: message },
-    ],
+    messages: [{ role: 'user', content: message }],
   })
 
   response.status(200).json({ result: completion.data.choices[0].message })

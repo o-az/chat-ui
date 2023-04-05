@@ -1,35 +1,13 @@
 import * as React from 'react'
 import Head from 'next/head'
 import { type Message, getTimestamp, botResponseSchema, humanDatetime } from '~/utilities'
-import { MessageUI } from '~/components'
-import { useKeyPress } from '~/hooks'
-import { CodeBlock, CopyBlock, dracula } from 'react-code-blocks'
-import { Inter, JetBrains_Mono } from 'next/font/google'
+import { MessageUI, TextArea } from '~/components'
+import { Inter } from 'next/font/google'
 import clsx from 'clsx'
 import { HeroiconsOutlineAdjustmentsVertical, HeroiconsOutlineArrowSmUp } from '~/components/icons'
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' })
-// const jetBrainsMono = JetBrains_Mono({ subsets: ['latin'], display: 'swap' })
-// const replaceFavicon = (bearCount: number) => {
-//   const linkTag = document.head.querySelector<HTMLLinkElement>('link[rel="icon"]')
-//   let href = linkTag?.getAttribute('href')
-//   href = bearCount > 0 ? href?.replace('💀', '🐻') : href?.replace('🐻', '💀')
-//   linkTag?.setAttribute('href', href ?? '')
-// }
-const codeSnippet = `
-import { CodeBlock, dracula } from "react-code-blocks";
 
-function MyCoolCodeBlock({ code, language, showLineNumbers, startingLineNumber }) {
-  return (
-    <CodeBlock
-      text={code}
-      language={language}
-      showLineNumbers={showLineNumbers}
-      startingLineNumber={startingLineNumber}
-      theme={dracula}
-    />
-  );
-}`
 export async function chatRequest(message: string) {
   const response = await fetch('/api/chat', {
     method: 'POST',
@@ -39,38 +17,7 @@ export async function chatRequest(message: string) {
   return data.result.content
 }
 
-export function TextArea(properties: {
-  setState: React.Dispatch<React.SetStateAction<string>>
-  onSubmit: (event: React.MouseEvent<Element, MouseEvent>) => void
-}) {
-  return (
-    <span
-      className={clsx(
-        // custom CSS from `src/styles/index.css`
-        'textarea',
-        'min-h-9 max-h-84 h-auto',
-        'ml-1 mr-2.5 rounded-2xl border-2 px-4 py-2 pt-1.5 text-lg',
-        'border-neutral-500 text-gray-50 outline-none'
-      )}
-      role='textbox'
-      contentEditable={true}
-      onInput={event => properties.setState(event.currentTarget.textContent ?? '')}
-      onKeyDown={event => {
-        if (event.shiftKey && event.key === 'Enter') return
-        if (event.key === 'Enter') {
-          properties.onSubmit(event as unknown as React.MouseEvent<HTMLButtonElement>)
-          Object.assign(event.currentTarget, { innerHTML: '', textContent: '' })
-          properties.setState('')
-        }
-      }}
-    />
-  )
-}
-
 export default function IndexPage() {
-  // const keyboardClick = useKeyPress('Enter')
-  // console.log(keyboardClick)
-  // console.log(keyboardClick)
   const [message, setMessage] = React.useState<string>('')
   const [messages, setMessages] = React.useState<Array<JSX.Element>>([
     <MessageUI
