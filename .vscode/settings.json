@@ -1,8 +1,6 @@
 {
   "files.associations": {
     // tells vscode that the file can take comments
-    "sandbox.config.json": "jsonc",
-    ".stackblitzrc": "jsonc",
     "settings.json": "jsonc"
   },
   "git.enableCommitSigning": true,

@@ -1,3 +1,5 @@
+import withPWA from 'next-pwa'
+import withMDX from '@next/mdx'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
 /********************
@@ -6,10 +8,21 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 const plugins = [
   // https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer
   withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' }),
+  // https://github.com/shadowwalker/next-pwa
+  process.env.NODE_ENV === 'production' ? withPWA({ dest: 'public' }) : (/** @type {any} */ _) => _,
+  // https://github.com/vercel/next.js/blob/canary/packages/next-mdx/readme.md
+  withMDX({
+    extension: /\.mdx?$/,
+    options: {
+      remarkPlugins: [],
+      rehypePlugins: [],
+    },
+  }),
 ]
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
@@ -26,14 +39,12 @@ const nextConfig = {
 
 // https://nextjs.org/docs/advanced-features/security-headers
 const ContentSecurityPolicy = `
-  default-src 'self';
   script-src 'self' 'unsafe-eval' 'unsafe-inline' *.youtube.com *.twitter.com *.vercel-insights.com;
 	child-src *.youtube.com *.google.com *.twitter.com *.vercel-insights.com;
 	style-src 'self' 'unsafe-inline';
 	img-src * blob: data:;
 	media-src 'none';
 	connect-src *;
-	font-src 'self';
 `
 
 const securityHeaders = [

@@ -10,5 +10,31 @@ body {
   justify-content: center;
   align-items: center;
   justify-items: center;
-  background: #efeee6;
+  background: #1d1d1e;
+}
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+input,
+textarea:-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+input,
+textarea {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.textarea {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  resize: vertical;
+  line-height: 20px;
+}
+
+.textarea[contenteditable]:empty::before {
+  content: 'Type a message…';
+  color: #a0a0a0;
 }
